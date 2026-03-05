@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Macon-Bibb County Board of Commissioners</title>
+<link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/dark/main.css" />
+<script src="https://js.arcgis.com/4.29/"></script>
+<style>
+html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial; overflow:hidden; }
+#header { position: relative; height:110px; background:#003366; color:white; text-align:center; box-sizing:border-box; padding-top:10px; }
+#header h2 { padding:0 130px; line-height:60px; margin:0; }
+#logo-left, #logo-right { position:absolute; top:50%; transform:translateY(-50%); height:90px; }
+#logo-left { left:20px; }
+#logo-right { right:20px; }
+#buttons { margin-top:5px; text-align:center; }
+#buttons button { margin:3px; padding:6px 12px; border:none; background:#1f78b4; color:white; border-radius:4px; cursor:pointer; }
+#buttons button:hover { background:#155a8a; }
+#viewDiv { height: calc(100vh - 100px); width:100%; }
+/* popup styling */
+.esri-popup__main-container { width:450px !important; max-width:600px !important; }
+.esri-popup--dock-left .esri-popup__main-container { width:600px !important; }
+.esri-popup__content-wrapper, .esri-popup__content, .esri-popup__scroll-container { max-height:none !important; }
+.esri-popup__content img { max-width:100%; max-height:320px; height:auto; display:block; margin:0 auto; }
+.esri-popup__header { padding:8px 10px !important; }
+</style>
+</head>
+<body>
+<div id="header">
+  <img id="logo-left" src="https://maconbibb.maps.arcgis.com/sharing/rest/content/items/eb449435963748b2bf004ebaf25fb4d8/data">
+  <h2>Find Your Commissioner</h2>
+  <img id="logo-right" src="https://maconbibb.maps.arcgis.com/sharing/rest/content/items/293c0d165e2c455b99c2af8fd3ae51f0/data">
+  <div id="buttons"></div>
+</div>
+
+<div id="viewDiv"></div>
+
+<script>
+require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Search"], function(WebMap, MapView, Search){
+  const webmap = new WebMap({ portalItem:{ id:"734fa64df6b744daaad6868a5a0f0bc2" } });
+  const view = new MapView({
+    container:"viewDiv",
+    map:webmap,
+    popup:{
+      dockEnabled:true,
+      dockOptions:{ position:"top-left", buttonEnabled:false, breakpoint:false },
+      visibleElements:{ closeButton:true },
+      collapseEnabled:false
+    }
+  });
+  const searchWidget = new Search({ view });
+  view.ui.add(searchWidget, "top-right");
+
+  webmap.when(() => {
+    const layer = webmap.layers.find(l => l.type==="feature");
+    if(!layer){ console.error("No feature layer found."); return; }
+
+    // Generate buttons dynamically
+    const buttonContainer = document.getElementById("buttons");
+    layer.queryFeatures({ where:"1=1", returnGeometry:false, outFields:["CommDist","REPNAME1"], orderByFields:["CommDist"] })
+      .then(result=>{
+        result.features.forEach(f=>{
+          const btn = document.createElement("button");
+          btn.innerText = `District ${f.attributes.CommDist}: ${f.attributes.REPNAME1}`;
+          btn.onclick = ()=> selectCommissioner(f.attributes.CommDist);
+          buttonContainer.appendChild(btn);
+        });
+      });
+
+    function selectCommissioner(CommDist){
+      layer.queryFeatures({ where:`CommDist=${CommDist}`, returnGeometry:true, outFields:["*"] })
+        .then(result=>{
+          if(result.features.length>0){
+            const feature = result.features[0];
+            view.goTo({ target:feature.geometry, padding:{top:100,left:300,right:100,bottom:100} });
+            view.openPopup({ features:[feature] });
+          }
+        });
+    }
+
+    // Optional: Popup when clicking search result
+    searchWidget.on("select-result", event=>{
+      const point = event.result.feature.geometry;
+      layer.queryFeatures({ geometry:point, spatialRelationship:"intersects", returnGeometry:true, outFields:["*"] })
+        .then(result=>{
+          if(result.features.length>0){
+            const feature = result.features[0];
+            view.goTo({ target:feature.geometry, padding:{top:100,left:300,right:100,bottom:100} });
+            view.openPopup({ features:[feature] });
+          } else alert("Address not within a commissioner district.");
+        });
+    });
+  });
+});
+</script>
+</body>
+</html>
