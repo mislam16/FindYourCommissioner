@@ -2,18 +2,51 @@
 <html>
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Macon-Bibb County Board of Commissioners</title>
 <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/dark/main.css" />
 <script src="https://js.arcgis.com/4.29/"></script>
 <style>
 html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial; overflow:hidden; }
-#header { position: relative; height:110px; background:#003366; color:white; text-align:center; box-sizing:border-box; padding-top:10px; }
-#header h2 { padding:0 130px; line-height:60px; margin:0; }
+#header {
+  position: relative;
+  background:#003366;
+  color:white;
+  text-align:center;
+  box-sizing:border-box;
+  padding:4px 0 6px 0; /* tighter spacing */
+}
+#header h2 {
+  padding:0 120px;
+  line-height:40px; /* smaller title spacing */
+  margin:2px 0;
+}
 #logo-left, #logo-right { position:absolute; top:50%; transform:translateY(-50%); height:90px; }
 #logo-left { left:20px; }
 #logo-right { right:20px; }
-#buttons { margin-top:5px; text-align:center; }
-#buttons button { margin:3px; padding:6px 12px; border:none; background:#1f78b4; color:white; border-radius:4px; cursor:pointer; }
+#buttons {
+  margin-top:4px;
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:6px;
+  width:90%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#buttons button {
+  padding:5px 10px;
+  border:none;
+  background:#1f78b4;
+  color:white;
+  border-radius:4px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+#buttons button:hover {
+  background:#155a8a;
+}
 #buttons button:hover { background:#155a8a; }
 #viewDiv { height: calc(100vh - 100px); width:100%; }
 /* popup styling */
@@ -22,6 +55,23 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 .esri-popup__content-wrapper, .esri-popup__content, .esri-popup__scroll-container { max-height:none !important; }
 .esri-popup__content img { max-width:100%; max-height:320px; height:auto; display:block; margin:0 auto; }
 .esri-popup__header { padding:8px 10px !important; }
+/* Mobile layout */
+@media (max-width: 700px) {
+
+  #buttons {
+    grid-template-columns: repeat(2, 1fr); /* 2 buttons per row on phones */
+  }
+
+  #logo-left, #logo-right {
+    height:50px;
+  }
+
+  #header h2 {
+    padding:0 60px;
+    font-size:18px;
+  }
+
+}
 </style>
 </head>
 <body>
