@@ -62,13 +62,29 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 
 /* Mobile layout */
 @media (max-width: 700px) {
-
-  #buttons {
-    grid-template-columns: repeat(2, 1fr);
-    padding-left:70px;
-    padding-right:70px;
+  
+  #logo-left, #logo-right {
+    position: static;      /* remove absolute positioning */
+    display: inline-block; /* keep them visible */
+    height:50px;           /* smaller logo */
+    margin: 5px 10px;      /* spacing around logos */
+    vertical-align: top;   /* align with title */
   }
 
+  #header h2 {
+    padding:0 10px;        /* reduce side padding */
+    font-size:18px;
+    margin-top:10px;       /* space below logos */
+  }
+  
+  /* buttons 3 per row */
+  #buttons {
+    grid-template-columns: repeat(3, 1fr);
+    padding-left:10px;
+    padding-right:10px;
+    gap:6px;
+    width:100%;
+  }
 }
 </style>
 </head>
