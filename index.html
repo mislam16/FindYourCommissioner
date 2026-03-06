@@ -62,28 +62,30 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 
 /* Mobile layout */
 @media (max-width: 700px) {
-  
+
+  /* Logos on top, centered */
   #logo-left, #logo-right {
-    position: static;      /* remove absolute positioning */
-    display: inline-block; /* keep them visible */
-    height:50px;           /* smaller logo */
-    margin: 5px 10px;      /* spacing around logos */
-    vertical-align: top;   /* align with title */
+    position: static !important;  /* remove absolute positioning */
+    display: block !important;    /* stack vertically */
+    margin: 5px auto 0 auto;      /* center horizontally with top margin */
+    height: 50px !important;      /* smaller logos */
+    transform: none !important;   /* remove translateY */
   }
 
+  /* Header title below logos */
   #header h2 {
-    padding:0 10px;        /* reduce side padding */
-    font-size:18px;
-    margin-top:10px;       /* space below logos */
+    padding: 0 10px !important;   /* reduce side padding */
+    font-size: 18px !important;
+    margin-top: 10px !important;  /* space below logos */
   }
-  
-  /* buttons 3 per row */
+
+  /* Buttons: 3 per row, full width minus padding */
   #buttons {
-    grid-template-columns: repeat(3, 1fr);
-    padding-left:10px;
-    padding-right:10px;
-    gap:6px;
-    width:100%;
+    grid-template-columns: repeat(3, 1fr) !important;
+    width: 100% !important;
+    padding: 0 10px !important;   /* keep buttons away from edges */
+    gap: 6px !important;
+    margin-top: 10px !important;
   }
 }
 </style>
@@ -158,3 +160,4 @@ require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Search"], function(W
 </script>
 </body>
 </html>
+
