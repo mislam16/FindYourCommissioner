@@ -132,32 +132,45 @@ require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Search"], function(W
         });
       });
 
-    function selectCommissioner(CommDist){
-      layer.queryFeatures({ where:`CommDist=${CommDist}`, returnGeometry:true, outFields:["*"] })
-        .then(result=>{
-          if(result.features.length>0){
-            const feature = result.features[0];
-            view.goTo({ target:feature.geometry, padding:{top:100,left:300,right:100,bottom:100} });
-            view.openPopup({ features:[feature] });
-          }
-        });
-    }
+ function selectCommissioner(CommDist){
+  layer.queryFeatures({ where:`CommDist=${CommDist}`, returnGeometry:true, outFields:["*"] })
+    .then(result=>{
+      if(result.features.length>0){
+        const feature = result.features[0];
+
+        // Detect mobile screen
+        let isMobile = window.innerWidth <= 700;
+
+        // Set smaller padding for mobile
+        let padding = isMobile 
+          ? { top: 10, left: 10, right: 10, bottom: 10 }
+          : { top: 100, left: 300, right: 100, bottom: 100 };
+
+        view.goTo({ target:feature.geometry, padding: padding });
+        view.openPopup({ features:[feature] });
+      }
+    });
+}
 
     // Optional: Popup when clicking search result
-    searchWidget.on("select-result", event=>{
-      const point = event.result.feature.geometry;
-      layer.queryFeatures({ geometry:point, spatialRelationship:"intersects", returnGeometry:true, outFields:["*"] })
-        .then(result=>{
-          if(result.features.length>0){
-            const feature = result.features[0];
-            view.goTo({ target:feature.geometry, padding:{top:100,left:300,right:100,bottom:100} });
-            view.openPopup({ features:[feature] });
-          } else alert("Address not within a commissioner district.");
-        });
+searchWidget.on("select-result", event=>{
+  const point = event.result.feature.geometry;
+  layer.queryFeatures({ geometry:point, spatialRelationship:"intersects", returnGeometry:true, outFields:["*"] })
+    .then(result=>{
+      if(result.features.length>0){
+        const feature = result.features[0];
+        let isMobile = window.innerWidth <= 700;
+        let padding = isMobile 
+          ? { top: 10, left: 10, right: 10, bottom: 10 }
+          : { top: 100, left: 300, right: 100, bottom: 100 };
+
+        view.goTo({ target:feature.geometry, padding: padding });
+        view.openPopup({ features:[feature] });
+      } else alert("Address not within a commissioner district.");
     });
+});
   });
 });
 </script>
 </body>
 </html>
-
