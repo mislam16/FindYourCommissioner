@@ -95,7 +95,7 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 
   #buttons button{
     font-size:12px !important;
-    padding:5px 6px !important;
+    padding:4px 6px !important;
   }
 
   /* Map height adjustment */
@@ -135,7 +135,7 @@ require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Search"], function(W
 popup:{
   dockEnabled:true,
   dockOptions:{
-    position: window.innerWidth <= 700 ? "bottom-center" : "top-left",
+    position: "top-left",
     buttonEnabled:false,
     breakpoint:false
   },
@@ -156,7 +156,11 @@ popup:{
       .then(result=>{
         result.features.forEach(f=>{
           const btn = document.createElement("button");
-          btn.innerText = `District ${f.attributes.CommDist}: ${f.attributes.REPNAME1}`;
+          const isMobile = window.innerWidth <= 700;
+
+btn.innerText = isMobile
+  ? `District ${f.attributes.CommDist}`
+  : `District ${f.attributes.CommDist}: ${f.attributes.REPNAME1}`;
           btn.onclick = ()=> selectCommissioner(f.attributes.CommDist);
           buttonContainer.appendChild(btn);
         });
