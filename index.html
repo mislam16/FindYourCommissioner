@@ -61,32 +61,58 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 .esri-popup__header { padding:8px 10px !important; }
 
 /* Mobile layout */
-@media (max-width: 700px) {
+@media (max-width:700px){
 
-  /* Logos on top, centered */
-  #logo-left, #logo-right {
-    position: static !important;  /* remove absolute positioning */
-    display: block !important;    /* stack vertically */
-    margin: 5px auto 0 auto;      /* center horizontally with top margin */
-    height: 50px !important;      /* smaller logos */
-    transform: none !important;   /* remove translateY */
+  #header{
+    padding:6px 0 6px 0;
   }
 
-  /* Header title below logos */
-  #header h2 {
-    padding: 0 10px !important;   /* reduce side padding */
-    font-size: 18px !important;
-    margin-top: 10px !important;  /* space below logos */
+  /* Smaller logos beside title */
+  #logo-left, #logo-right{
+    height:40px !important;
+    top:10px;
+    transform:none;
   }
 
-  /* Buttons: 3 per row, full width minus padding */
-  #buttons {
-    grid-template-columns: repeat(3, 1fr) !important;
-    width: 100% !important;
-    padding: 0 10px !important;   /* keep buttons away from edges */
-    gap: 6px !important;
-    margin-top: 10px !important;
+  #logo-left{ left:10px; }
+  #logo-right{ right:10px; }
+
+  /* Smaller title */
+  #header h2{
+    padding:0 60px !important;
+    font-size:18px !important;
+    line-height:24px !important;
+    margin:2px 0 !important;
   }
+
+  /* Buttons: 2 per row */
+  #buttons{
+    grid-template-columns: repeat(2,1fr) !important;
+    width:100% !important;
+    padding:0 10px !important;
+    gap:5px !important;
+  }
+
+  #buttons button{
+    font-size:12px !important;
+    padding:5px 6px !important;
+  }
+
+  /* Map height adjustment */
+  #viewDiv{
+    height:calc(100vh - 120px);
+  }
+
+  /* Mobile popup style */
+  .esri-popup__main-container{
+    width:90vw !important;
+    max-width:90vw !important;
+  }
+
+  .esri-popup__content img{
+    max-height:200px !important;
+  }
+
 }
 </style>
 </head>
@@ -106,9 +132,13 @@ require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Search"], function(W
   const view = new MapView({
     container:"viewDiv",
     map:webmap,
-    popup:{
-      dockEnabled:true,
-      dockOptions:{ position:"top-left", buttonEnabled:false, breakpoint:false },
+popup:{
+  dockEnabled:true,
+  dockOptions:{
+    position: window.innerWidth <= 700 ? "bottom-center" : "top-left",
+    buttonEnabled:false,
+    breakpoint:false
+  },
       visibleElements:{ closeButton:true },
       collapseEnabled:false
     }
