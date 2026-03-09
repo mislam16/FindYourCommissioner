@@ -133,8 +133,16 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Search"], function(WebMap, MapView, Search){
   const webmap = new WebMap({ portalItem:{ id:"734fa64df6b744daaad6868a5a0f0bc2" } });
   const view = new MapView({
-    container:"viewDiv",
-    map:webmap,
+  container:"viewDiv",
+  map:webmap,
+
+extent: {
+  xmin: -83.80,
+  ymin: 32.70,
+  xmax: -83.45,
+  ymax: 32.95,
+  spatialReference: { wkid: 4326 }
+  },
 popup:{
   dockEnabled:true,
   dockOptions:{
@@ -211,6 +219,7 @@ searchWidget.on("select-result", event=>{
 </script>
 </body>
 </html>
+
 
 
 
