@@ -264,6 +264,7 @@ popup:{
       collapseEnabled:false
     }
   });
+let layer;
 const searchWidget = new Search({ view });
 view.ui.add(searchWidget, "top-right");
 
@@ -296,7 +297,7 @@ clerkBtn.onclick = showClerkInfo;
 clerkDiv.appendChild(clerkBtn);
 view.ui.add(clerkDiv, "top-right");
   webmap.when(() => {
-    const layer = webmap.layers.find(l => l.type==="feature");
+    layer = webmap.layers.find(l => l.type==="feature");
     if(!layer){ console.error("No feature layer found."); return; }
 
     // Generate buttons dynamically
