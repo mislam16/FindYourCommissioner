@@ -193,7 +193,7 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 /* CLERK PANEL */
 #clerkPanel{
   position:absolute;
-  top:160px; /* pushed down below search + button */
+  top:180px; /* pushed down below search + button */
   right:15px;
   width:260px;
   background:white;
@@ -234,7 +234,7 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 
 <div id="clerkPanel">
   <img id="clerkImage" src="" alt="Clerk Photo">
-  <h3>Clerk of Commission</h3>
+  <h3>Meet the Clerk</h3>
   <p id="clerkEmail"></p>
   <p id="clerkPhone"></p>
 </div>
@@ -272,9 +272,9 @@ view.ui.add(searchWidget, "top-right");
 function showClerkInfo(){
   const panel = document.getElementById("clerkPanel");
 
-  document.getElementById("clerkImage").src = "PASTE_IMAGE_URL_HERE";
-  document.getElementById("clerkEmail").innerHTML = "<b>Email:</b> clerk@example.com";
-  document.getElementById("clerkPhone").innerHTML = "<b>Phone:</b> (123) 456-7890";
+  document.getElementById("clerkImage").src = "https://maconbibb.maps.arcgis.com/sharing/rest/content/items/cc9a48b3d32047ea96aa3c5cd3d09403/data";
+  document.getElementById("clerkEmail").innerHTML = "<b>Email:</b> jross@maconbibb.us";
+  document.getElementById("clerkPhone").innerHTML = "<b>Phone:</b> (478) 751-7260";
 
   panel.style.display = (panel.style.display === "none") ? "block" : "none";
  // 👉 ADD THIS (zoom to full extent)
