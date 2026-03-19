@@ -264,11 +264,23 @@ popup:{
       collapseEnabled:false
     }
   });
-  const searchWidget = new Search({ view });
-  view.ui.add(searchWidget, "top-right");
-// --- Clerk Button UI (under search) ---
+const searchWidget = new Search({ view });
+view.ui.add(searchWidget, "top-right");
+
+// --- Clerk Info Function (MOVE HERE) ---
+function showClerkInfo(){
+  const panel = document.getElementById("clerkPanel");
+
+  document.getElementById("clerkImage").src = "PASTE_IMAGE_URL_HERE";
+  document.getElementById("clerkEmail").innerHTML = "<b>Email:</b> clerk@example.com";
+  document.getElementById("clerkPhone").innerHTML = "<b>Phone:</b> (123) 456-7890";
+
+  panel.style.display = (panel.style.display === "none") ? "block" : "none";
+}
+
+// --- Clerk Button UI ---
 const clerkDiv = document.createElement("div");
-clerkDiv.className = "esri-widget"; // ArcGIS styling
+clerkDiv.className = "esri-widget";
 clerkDiv.style.padding = "6px";
 
 const clerkBtn = document.createElement("button");
@@ -282,10 +294,7 @@ clerkBtn.style.cursor = "pointer";
 clerkBtn.onclick = showClerkInfo;
 
 clerkDiv.appendChild(clerkBtn);
-
-// Add BELOW search (same position stacks automatically)
 view.ui.add(clerkDiv, "top-right");
-
   webmap.when(() => {
     const layer = webmap.layers.find(l => l.type==="feature");
     if(!layer){ console.error("No feature layer found."); return; }
@@ -306,18 +315,6 @@ btn.innerText = isMobile
         });
       });
 
-// --- Clerk Info Function ---
-function showClerkInfo(){
-  const panel = document.getElementById("clerkPanel");
-
-  // 🔴 REPLACE THESE WITH YOUR ACTUAL VALUES
-  document.getElementById("clerkImage").src = "PASTE_IMAGE_URL_HERE";
-  document.getElementById("clerkEmail").innerHTML = "<b>Email:</b> clerk@example.com";
-  document.getElementById("clerkPhone").innerHTML = "<b>Phone:</b> (123) 456-7890";
-
-  // Toggle visibility
-  panel.style.display = (panel.style.display === "none") ? "block" : "none";
-}
 view.on("click", () => {
   document.getElementById("clerkPanel").style.display = "none";
 });
