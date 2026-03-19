@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Macon-Bibb County Board of Commissioners</title>
-<link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/dark/main.css" />
+<link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
 <script src="https://js.arcgis.com/4.29/"></script>
 <style>
 html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial; overflow:hidden; }
@@ -151,24 +151,43 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 }
 /* SEARCH BAR COLOR */
 .esri-search__input {
-  background-color:#003366 !important;
-  color:white !important;
-  border:none !important;
+  background-color:#ffffff !important;
+  color:#000000 !important;
+  border:1px solid #ccc !important;
 }
 
 .esri-search__input::placeholder{
-  color:#cfe3ff !important;
+  color:#666 !important;
 }
 
-/* Search button */
-.esri-search__submit-button{
-  background:#003366 !important;
-  color:white !important;
+/* Search button (main) */
+.esri-search__submit-button {
+  background:#ffffff !important;
+  color:#333 !important;
+  border:1px solid #ccc !important;
 }
 
-/* Search dropdown results */
+/* Hover + focus states */
+.esri-search__submit-button:hover,
+.esri-search__submit-button:focus {
+  background:#f2f2f2 !important;
+  color:#000 !important;
+}
+
+/* Icon inside button */
+.esri-search__submit-button .esri-icon-search {
+  color:#333 !important;
+}
+
+/* Remove blue highlight on click */
+.esri-search__submit-button:active {
+  background:#e6e6e6 !important;
+}
+
+/* Suggestions dropdown */
 .esri-search__suggestions-menu{
-  background:white;
+  background:white !important;
+  color:#000 !important;
 }
 </style>
 </head>
