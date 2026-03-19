@@ -189,6 +189,37 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
   background:white !important;
   color:#000 !important;
 }
+
+/* CLERK PANEL */
+#clerkPanel{
+  position:absolute;
+  top:70px; /* just below search bar */
+  right:10px;
+  width:260px;
+  background:white;
+  border-radius:8px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.2);
+  padding:10px;
+  display:none; /* hidden by default */
+  z-index:99;
+}
+
+#clerkPanel img{
+  width:100%;
+  border-radius:6px;
+  margin-bottom:8px;
+}
+
+#clerkPanel h3{
+  margin:5px 0;
+  font-size:16px;
+  color:#003366;
+}
+
+#clerkPanel p{
+  margin:3px 0;
+  font-size:13px;
+}
 </style>
 </head>
 <body>
@@ -200,6 +231,13 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 </div>
 
 <div id="viewDiv"></div>
+
+<div id="clerkPanel">
+  <img id="clerkImage" src="" alt="Clerk Photo">
+  <h3>Clerk of Commission</h3>
+  <p id="clerkEmail"></p>
+  <p id="clerkPhone"></p>
+</div>
 
 <script>
 require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Search"], function(WebMap, MapView, Search){
@@ -248,6 +286,26 @@ btn.innerText = isMobile
           buttonContainer.appendChild(btn);
         });
       });
+	  
+// --- Clerk Button ---
+const clerkBtn = document.createElement("button");
+clerkBtn.innerText = "Clerk";
+clerkBtn.style.background = "#28a745"; // optional green
+clerkBtn.onclick = showClerkInfo;
+buttonContainer.appendChild(clerkBtn);
+
+// --- Clerk Info Function ---
+function showClerkInfo(){
+  const panel = document.getElementById("clerkPanel");
+
+  // 🔴 REPLACE THESE WITH YOUR ACTUAL VALUES
+  document.getElementById("clerkImage").src = "PASTE_IMAGE_URL_HERE";
+  document.getElementById("clerkEmail").innerHTML = "<b>Email:</b> clerk@example.com";
+  document.getElementById("clerkPhone").innerHTML = "<b>Phone:</b> (123) 456-7890";
+
+  // Toggle visibility
+  panel.style.display = (panel.style.display === "none") ? "block" : "none";
+}
 
  function selectCommissioner(CommDist){
   layer.queryFeatures({ where:`CommDist=${CommDist}`, returnGeometry:true, outFields:["*"] })
