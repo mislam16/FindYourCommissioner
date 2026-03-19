@@ -193,7 +193,7 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 /* CLERK PANEL */
 #clerkPanel{
   position:absolute;
-  top:110px; /* pushed down below search + button */
+  top:160px; /* pushed down below search + button */
   right:15px;
   width:260px;
   background:white;
@@ -277,6 +277,14 @@ function showClerkInfo(){
   document.getElementById("clerkPhone").innerHTML = "<b>Phone:</b> (123) 456-7890";
 
   panel.style.display = (panel.style.display === "none") ? "block" : "none";
+ // 👉 ADD THIS (zoom to full extent)
+  view.goTo({
+    xmin: -83.80,
+    ymin: 32.70,
+    xmax: -83.45,
+    ymax: 32.95,
+    spatialReference: { wkid: 4326 }
+  });
 }
 
 // --- Clerk Button UI ---
@@ -289,7 +297,9 @@ clerkBtn.innerText = "Clerk of Commission";
 clerkBtn.style.width = "100%";
 clerkBtn.style.padding = "6px";
 clerkBtn.style.border = "1px solid #ccc";
-clerkBtn.style.background = "#ffffff";
+clerkBtn.style.background = "#28a745"; // green
+clerkBtn.style.color = "white";
+clerkBtn.style.border = "none";
 clerkBtn.style.cursor = "pointer";
 
 clerkBtn.onclick = showClerkInfo;
