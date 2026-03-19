@@ -193,7 +193,7 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 /* CLERK PANEL */
 #clerkPanel{
   position:absolute;
-  top:180px; /* pushed down below search + button */
+  top:175px; /* pushed down below search + button */
   right:15px;
   width:260px;
   background:white;
@@ -234,7 +234,7 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 
 <div id="clerkPanel">
   <img id="clerkImage" src="" alt="Clerk Photo">
-  <h3>Meet the Clerk</h3>
+  <h3>Janice Ross</h3>
   <p id="clerkEmail"></p>
   <p id="clerkPhone"></p>
 </div>
@@ -272,13 +272,19 @@ view.ui.add(searchWidget, "top-right");
 function showClerkInfo(){
   const panel = document.getElementById("clerkPanel");
 
+  // Always show (not toggle)
+  panel.style.display = "block";
+
   document.getElementById("clerkImage").src = "https://maconbibb.maps.arcgis.com/sharing/rest/content/items/cc9a48b3d32047ea96aa3c5cd3d09403/data";
   document.getElementById("clerkEmail").innerHTML = "<b>Email:</b> jross@maconbibb.us";
   document.getElementById("clerkPhone").innerHTML = "<b>Phone:</b> (478) 751-7260";
 
-  panel.style.display = (panel.style.display === "none") ? "block" : "none";
- // 👉 ADD THIS (zoom to full extent)
-  view.goTo(view.map.initialViewProperties.viewpoint);
+  // Delay slightly so UI updates first (key fix)
+  setTimeout(() => {
+    view.goTo(view.map.initialViewProperties.viewpoint, {
+      duration: 800
+    });
+  }, 50);
 }
 
 // --- Clerk Button UI ---
@@ -287,7 +293,7 @@ clerkDiv.className = "esri-widget";
 clerkDiv.style.padding = "6px";
 
 const clerkBtn = document.createElement("button");
-clerkBtn.innerText = "Clerk of Commission";
+clerkBtn.innerText = "Meet the Clerk";
 clerkBtn.style.width = "100%";
 clerkBtn.style.padding = "6px";
 clerkBtn.style.border = "1px solid #ccc";
