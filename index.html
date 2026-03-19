@@ -278,13 +278,7 @@ function showClerkInfo(){
 
   panel.style.display = (panel.style.display === "none") ? "block" : "none";
  // 👉 ADD THIS (zoom to full extent)
-  view.goTo({
-    xmin: -83.80,
-    ymin: 32.70,
-    xmax: -83.45,
-    ymax: 32.95,
-    spatialReference: { wkid: 4326 }
-  });
+  view.goTo(view.map.initialViewProperties.viewpoint);
 }
 
 // --- Clerk Button UI ---
