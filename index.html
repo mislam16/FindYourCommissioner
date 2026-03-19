@@ -193,14 +193,14 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 /* CLERK PANEL */
 #clerkPanel{
   position:absolute;
-  top:70px; /* just below search bar */
-  right:10px;
+  top:110px; /* pushed down below search + button */
+  right:15px;
   width:260px;
   background:white;
   border-radius:8px;
   box-shadow:0 2px 10px rgba(0,0,0,0.2);
   padding:10px;
-  display:none; /* hidden by default */
+  display:none;
   z-index:99;
 }
 
@@ -266,6 +266,25 @@ popup:{
   });
   const searchWidget = new Search({ view });
   view.ui.add(searchWidget, "top-right");
+// --- Clerk Button UI (under search) ---
+const clerkDiv = document.createElement("div");
+clerkDiv.className = "esri-widget"; // ArcGIS styling
+clerkDiv.style.padding = "6px";
+
+const clerkBtn = document.createElement("button");
+clerkBtn.innerText = "Clerk of Commission";
+clerkBtn.style.width = "100%";
+clerkBtn.style.padding = "6px";
+clerkBtn.style.border = "1px solid #ccc";
+clerkBtn.style.background = "#ffffff";
+clerkBtn.style.cursor = "pointer";
+
+clerkBtn.onclick = showClerkInfo;
+
+clerkDiv.appendChild(clerkBtn);
+
+// Add BELOW search (same position stacks automatically)
+view.ui.add(clerkDiv, "top-right");
 
   webmap.when(() => {
     const layer = webmap.layers.find(l => l.type==="feature");
@@ -286,13 +305,6 @@ btn.innerText = isMobile
           buttonContainer.appendChild(btn);
         });
       });
-	  
-// --- Clerk Button ---
-const clerkBtn = document.createElement("button");
-clerkBtn.innerText = "Clerk";
-clerkBtn.style.background = "#28a745"; // optional green
-clerkBtn.onclick = showClerkInfo;
-buttonContainer.appendChild(clerkBtn);
 
 // --- Clerk Info Function ---
 function showClerkInfo(){
@@ -306,6 +318,9 @@ function showClerkInfo(){
   // Toggle visibility
   panel.style.display = (panel.style.display === "none") ? "block" : "none";
 }
+view.on("click", () => {
+  document.getElementById("clerkPanel").style.display = "none";
+});
 
  function selectCommissioner(CommDist){
   layer.queryFeatures({ where:`CommDist=${CommDist}`, returnGeometry:true, outFields:["*"] })
