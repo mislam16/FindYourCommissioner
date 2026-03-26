@@ -8,42 +8,34 @@
 <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
 <script src="https://js.arcgis.com/4.29/"></script>
 <style>
-html, body {
-  margin:0;
-  padding:0;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  font-family: Arial;
-}
-	
+html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial; overflow:hidden; }
 #header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  position: relative;
   background:#003366;
   color:white;
-  padding:5px 20px;
-}
-
-#header h2 {
-  margin:0;
-  flex:1;
   text-align:center;
-  font-size:22px;
+  box-sizing:border-box;
+  padding:7px 0 6px 0; /* tighter spacing */
 }
-
-#logo-left, #logo-right {
-  height:60px;   /* reduce size a bit */
+#header h2 {
+  padding:0 120px;
+  line-height:40px; /* smaller title spacing */
+  margin:2px 0;
 }
+#logo-left, #logo-right { position:absolute; top:50%; transform:translateY(-50%); height:90px; }
 #logo-left { left:20px; }
 #logo-right { right:20px; }
 #buttons {
+  margin-top:4px;
   display:grid;
   grid-template-columns: repeat(5, 1fr);
   gap:6px;
   width:80%;
-  margin:6px auto;
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:120px;       /* space from left logo */
+  padding-right:120px;      /* space from right logo */
+  box-sizing:border-box;
 }
 
 #buttons button {
@@ -60,10 +52,7 @@ html, body {
   background:#155a8a;
 }
 #buttons button:hover { background:#155a8a; }
-#viewDiv {
-  flex:1;   /* THIS is the key */
-  width:100%;
-}
+#viewDiv { height: calc(100vh - 100px); width:100%; }
 /* popup styling */
 /* POPUP COLOR THEME */
 .esri-popup__header{
@@ -238,11 +227,10 @@ html, body {
   <img id="logo-left" src="https://maconbibb.spatialitics.net/portal/sharing/rest/content/items/7ba46934aaf74340a925c8dcb3a56dcc/data">
   <h2>Find Your Commissioner</h2>
   <img id="logo-right" src="https://maconbibb.spatialitics.net/portal/sharing/rest/content/items/69b0360f3d104a2ea2ad4932a1fb8586/data">
+  <div id="buttons"></div>
 </div>
-<div id="buttons"></div>
 
 <div id="viewDiv"></div>
-
 
 <div id="clerkPanel">
   <img id="clerkImage" src="" alt="Clerk Photo">
@@ -253,14 +241,7 @@ html, body {
 
 <script>
 require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Search"], function(WebMap, MapView, Search){
-  const webmap = new WebMap({
-  portalItem:{
-    id: "7ab575cdabd943ada10af5f04bd078cb",
-    portal: {
-      url: "https://maconbibb.spatialitics.net/portal"
-    }
-  }
-});
+  const webmap = new WebMap({ portalItem:{ id:"734fa64df6b744daaad6868a5a0f0bc2" } });
   const view = new MapView({
   container:"viewDiv",
   map:webmap,
@@ -391,6 +372,5 @@ searchWidget.on("select-result", event=>{
 </script>
 </body>
 </html>
-
 
 
