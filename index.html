@@ -8,7 +8,15 @@
 <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
 <script src="https://js.arcgis.com/4.29/"></script>
 <style>
-html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial; overflow:hidden; }
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  font-family: Arial;
+}
+	
 #header {
   display:flex;
   align-items:center;
@@ -31,13 +39,11 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 #logo-left { left:20px; }
 #logo-right { right:20px; }
 #buttons {
-  margin-top:6px;
   display:grid;
   grid-template-columns: repeat(5, 1fr);
   gap:6px;
   width:80%;
-  margin-left:auto;
-  margin-right:auto;
+  margin:6px auto;
 }
 
 #buttons button {
@@ -54,7 +60,10 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
   background:#155a8a;
 }
 #buttons button:hover { background:#155a8a; }
-#viewDiv { height: calc(100vh - 100px); width:100%; }
+#viewDiv {
+  flex:1;   /* THIS is the key */
+  width:100%;
+}
 /* popup styling */
 /* POPUP COLOR THEME */
 .esri-popup__header{
