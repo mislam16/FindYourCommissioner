@@ -10,19 +10,24 @@
 <style>
 html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial; overflow:hidden; }
 #header {
-  position: relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   background:#003366;
   color:white;
-  text-align:center;
-  box-sizing:border-box;
-  padding:7px 0 6px 0; /* tighter spacing */
+  padding:5px 20px;
 }
+
 #header h2 {
-  padding:0 120px;
-  line-height:40px; /* smaller title spacing */
-  margin:2px 0;
+  margin:0;
+  flex:1;
+  text-align:center;
+  font-size:22px;
 }
-#logo-left, #logo-right { position:absolute; top:50%; transform:translateY(-50%); height:90px; }
+
+#logo-left, #logo-right {
+  height:60px;   /* reduce size a bit */
+}
 #logo-left { left:20px; }
 #logo-right { right:20px; }
 #buttons {
@@ -227,7 +232,6 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
   <img id="logo-left" src="https://maconbibb.spatialitics.net/portal/sharing/rest/content/items/7ba46934aaf74340a925c8dcb3a56dcc/data">
   <h2>Find Your Commissioner</h2>
   <img id="logo-right" src="https://maconbibb.spatialitics.net/portal/sharing/rest/content/items/69b0360f3d104a2ea2ad4932a1fb8586/data">
-  <div id="buttons"></div>
 </div>
 
 <div id="viewDiv"></div>
