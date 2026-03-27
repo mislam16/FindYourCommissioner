@@ -313,8 +313,8 @@ clerkBtn.onclick = showClerkInfo;
 
 clerkDiv.appendChild(clerkBtn);
 view.ui.add(clerkDiv, "top-right");
- function selectCommissioner(CommDist){
-  layer.queryFeatures({ where:`CommDist=${CommDist}`, returnGeometry:true, outFields:["*"] })
+ function selectCommissioner(commdist){
+  layer.queryFeatures({ where:`commdist=${commdist}`, returnGeometry:true, outFields:["*"] })
     .then(result=>{
       if(result.features.length>0){
         const feature = result.features[0];
@@ -359,8 +359,8 @@ view.ui.add(clerkDiv, "top-right");
   layer.queryFeatures({
     where:"1=1",
     returnGeometry:false,
-    outFields:["CommDist","REPNAME1"],
-    orderByFields:["CommDist ASC"]
+    outFields:["commdist","repname1"],
+    orderByFields:["commdist ASC"]
   })
   .then(result=>{
     result.features.forEach(f=>{
@@ -368,10 +368,10 @@ view.ui.add(clerkDiv, "top-right");
       const isMobile = window.innerWidth <= 700;
 
       btn.innerText = isMobile
-        ? `District ${f.attributes.CommDist}`
-        : `District ${f.attributes.CommDist}: ${f.attributes.REPNAME1}`;
+        ? `District ${f.attributes.commdist}`
+        : `District ${f.attributes.commdist}: ${f.attributes.repname1}`;
 
-      btn.onclick = ()=> selectCommissioner(f.attributes.CommDist);
+      btn.onclick = ()=> selectCommissioner(f.attributes.commdist);
 
       buttonContainer.appendChild(btn);
     });
