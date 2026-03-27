@@ -313,10 +313,8 @@ clerkBtn.onclick = showClerkInfo;
 
 clerkDiv.appendChild(clerkBtn);
 view.ui.add(clerkDiv, "top-right");
-  webmap.when(() => {
 webmap.when(() => {
 
-  // 🔥 Find feature layer even inside group layers
   function findFeatureLayer(layers){
     for (let l of layers){
       if (l.type === "feature") return l;
@@ -335,26 +333,30 @@ webmap.when(() => {
     return;
   }
 
-  console.log("Layer found:", layer);
+  const buttonContainer = document.getElementById("buttons");
 
-  // 👇 keep your existing button code here
-    if(!layer){ console.error("No feature layer found."); return; }
+  layer.queryFeatures({
+    where:"1=1",
+    returnGeometry:false,
+    outFields:["CommDist","REPNAME1"],
+    orderByFields:["CommDist ASC"]
+  })
+  .then(result=>{
+    result.features.forEach(f=>{
+      const btn = document.createElement("button");
+      const isMobile = window.innerWidth <= 700;
 
-    // Generate buttons dynamically
-    const buttonContainer = document.getElementById("buttons");
-    layer.queryFeatures({ where:"1=1", returnGeometry:false, outFields:["CommDist","REPNAME1"], orderByFields:["CommDist ASC"] })
-      .then(result=>{
-        result.features.forEach(f=>{
-          const btn = document.createElement("button");
-          const isMobile = window.innerWidth <= 700;
+      btn.innerText = isMobile
+        ? `District ${f.attributes.CommDist}`
+        : `District ${f.attributes.CommDist}: ${f.attributes.REPNAME1}`;
 
-btn.innerText = isMobile
-  ? `District ${f.attributes.CommDist}`
-  : `District ${f.attributes.CommDist}: ${f.attributes.REPNAME1}`;
-          btn.onclick = ()=> selectCommissioner(f.attributes.CommDist);
-          buttonContainer.appendChild(btn);
-        });
-      });
+      btn.onclick = ()=> selectCommissioner(f.attributes.CommDist);
+
+      buttonContainer.appendChild(btn);
+    });
+  });
+
+});
 
 view.on("click", () => {
   document.getElementById("clerkPanel").style.display = "none";
