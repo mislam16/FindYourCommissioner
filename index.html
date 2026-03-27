@@ -15,7 +15,7 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
   color:white;
   text-align:center;
   box-sizing:border-box;
-  padding:7px 0 6px 0; /* tighter spacing */
+  padding:10px 0 20px 0; /* tighter spacing */
 }
 #header h2 {
   padding:0 120px;
@@ -26,16 +26,16 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
 #logo-left { left:20px; }
 #logo-right { right:20px; }
 #buttons {
-  margin-top:4px;
   display:grid;
   grid-template-columns: repeat(5, 1fr);
   gap:6px;
   width:80%;
-  margin-left:auto;
-  margin-right:auto;
-  padding-left:120px;       /* space from left logo */
-  padding-right:120px;      /* space from right logo */
-  box-sizing:border-box;
+  margin:10px auto 0 auto;
+
+  /* 🔥 ADD THESE */
+  position: relative;
+  z-index: 2;
+  clear: both;
 }
 
 #buttons button {
@@ -52,7 +52,7 @@ html, body { margin:0; padding:0; height:100vh; width:100vw; font-family: Arial;
   background:#155a8a;
 }
 #buttons button:hover { background:#155a8a; }
-#viewDiv { height: calc(100vh - 100px); width:100%; }
+#viewDiv { height: calc(100vh - 150px); width:100%; }
 /* popup styling */
 /* POPUP COLOR THEME */
 .esri-popup__header{
