@@ -313,7 +313,27 @@ clerkBtn.onclick = showClerkInfo;
 
 clerkDiv.appendChild(clerkBtn);
 view.ui.add(clerkDiv, "top-right");
-webmap.when(() => {
+ function selectCommissioner(CommDist){
+  layer.queryFeatures({ where:`CommDist=${CommDist}`, returnGeometry:true, outFields:["*"] })
+    .then(result=>{
+      if(result.features.length>0){
+        const feature = result.features[0];
+
+        // Detect mobile screen
+        let isMobile = window.innerWidth <= 700;
+
+        // Set smaller padding for mobile
+        let padding = isMobile 
+          ? { top: 10, left: 10, right: 10, bottom: 10 }
+          : { top: 100, left: 300, right: 100, bottom: 100 };
+
+        view.goTo({ target:feature.geometry, padding: padding });
+        view.openPopup({ features:[feature] });
+      }
+    });
+}
+	
+	webmap.when(() => {
 
   function findFeatureLayer(layers){
     for (let l of layers){
@@ -362,26 +382,6 @@ view.on("click", () => {
   document.getElementById("clerkPanel").style.display = "none";
 });
 
- function selectCommissioner(CommDist){
-  layer.queryFeatures({ where:`CommDist=${CommDist}`, returnGeometry:true, outFields:["*"] })
-    .then(result=>{
-      if(result.features.length>0){
-        const feature = result.features[0];
-
-        // Detect mobile screen
-        let isMobile = window.innerWidth <= 700;
-
-        // Set smaller padding for mobile
-        let padding = isMobile 
-          ? { top: 10, left: 10, right: 10, bottom: 10 }
-          : { top: 100, left: 300, right: 100, bottom: 100 };
-
-        view.goTo({ target:feature.geometry, padding: padding });
-        view.openPopup({ features:[feature] });
-      }
-    });
-}
-
     // Optional: Popup when clicking search result
 searchWidget.on("select-result", event=>{
   const point = event.result.feature.geometry;
@@ -400,7 +400,6 @@ searchWidget.on("select-result", event=>{
     });
 });
   });
-});
 </script>
 </body>
 </html>
