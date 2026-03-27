@@ -314,7 +314,30 @@ clerkBtn.onclick = showClerkInfo;
 clerkDiv.appendChild(clerkBtn);
 view.ui.add(clerkDiv, "top-right");
   webmap.when(() => {
-    layer = webmap.layers.find(l => l.type==="feature");
+webmap.when(() => {
+
+  // 🔥 Find feature layer even inside group layers
+  function findFeatureLayer(layers){
+    for (let l of layers){
+      if (l.type === "feature") return l;
+      if (l.type === "group"){
+        let found = findFeatureLayer(l.layers);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  layer = findFeatureLayer(webmap.layers);
+
+  if(!layer){
+    console.error("No feature layer found.");
+    return;
+  }
+
+  console.log("Layer found:", layer);
+
+  // 👇 keep your existing button code here
     if(!layer){ console.error("No feature layer found."); return; }
 
     // Generate buttons dynamically
